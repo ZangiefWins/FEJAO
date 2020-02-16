@@ -1,0 +1,12 @@
+<div class="container-fluid main">
+    <app-login
+    *ngIf="!loggedUser"
+    [ngStyle]="{'opacity' : this.showLogin ? 1 : 0}"
+    class="row h-100 text-center"
+    (usernameEmitter)="usernameHandler($event)"></app-login>
+
+    <app-game
+    *ngIf="loggedUser"
+    class="row h-100"
+    [loggedUser]="loggedUser"></app-game>
+</div>

@@ -1,0 +1,15 @@
+<div class="col-4 offset-4 my-auto text-center bg-white rounded pt-4 px-4 login-shadow">
+    <span class="text-muted font-weight-bold">S A A A L V E</span>
+    <form (ngSubmit)='login()'>
+        <div class="form-group">
+            <label for="username"></label>
+            <input type="text" class="form-control" name="username" id="username" [(ngModel)]="username" placeholder="Insira seu nome de usuário...">
+        </div>
+        <button type="submit" class="btn btn-info btn-block mt-3 mb-3">JOGAR</button>
+    </form>
+</div>
+<div class="col-4 my-auto">
+    <div class="speech-bubble" [ngStyle]="{'opacity' : this.error ? 1 : 0}">
+        <span><i class="fas fa-exclamation-triangle red-triangle"></i>  {{errorMessage}}</span>
+    </div>
+</div>

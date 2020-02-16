@@ -1,0 +1,40 @@
+.login-shadow {
+    box-shadow: 5px 5px 20px black;
+}
+
+.no-side-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.speech-bubble {
+	padding: 5px;
+	color: rgb(56, 52, 52);
+	transition: opacity 1s linear;
+	font-size: 17px;
+    max-width: 76%;
+    word-wrap: break-word;
+	position: relative;
+	background: rgb(220, 255, 249);
+    border-radius: .4em;
+    margin-left: -20px;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	left: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-right-color: rgb(220, 255, 249);
+	border-left: 0;
+	border-bottom: 0;
+	margin-top: -10px;
+	margin-left: -20px;
+}
+
+.red-triangle {
+	color: rgb(241, 68, 68);
+}
