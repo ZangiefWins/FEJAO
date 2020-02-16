@@ -7805,11 +7805,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\guale\\Desktop\\FEJÃO\\FEJAO\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS.csproj",
+      "projectUniqueName": "C:\\Users\\guale\\Desktop\\FEJÃO\\FEJAO\\backend\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS.csproj",
       "projectName": "SHE-DIED-FROM-SYPHILIS",
-      "projectPath": "C:\\Users\\guale\\Desktop\\FEJÃO\\FEJAO\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS.csproj",
+      "projectPath": "C:\\Users\\guale\\Desktop\\FEJÃO\\FEJAO\\backend\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS.csproj",
       "packagesPath": "C:\\Users\\guale\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\guale\\Desktop\\FEJÃO\\FEJAO\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS\\obj\\",
+      "outputPath": "C:\\Users\\guale\\Desktop\\FEJÃO\\FEJAO\\backend\\SHE-DIED-FROM-SYPHILIS\\SHE-DIED-FROM-SYPHILIS\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
