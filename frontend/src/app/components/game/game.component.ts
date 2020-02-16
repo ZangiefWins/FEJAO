@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-game',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class GameComponent implements OnInit {
 
-  @Input() loggedUser : string;
+  @Input() loggedUser : User;
 
   allBeans : Array<Array<string>> = new Array<Array<string>>();
 

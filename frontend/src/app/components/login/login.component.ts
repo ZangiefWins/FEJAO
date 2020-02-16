@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,14 @@ export class LoginComponent implements OnInit {
   error : boolean;
   errorMessage : string;
 
-  @Output() usernameEmitter : EventEmitter<string> = new EventEmitter<string>();
+  @Output() userEmitter : EventEmitter<User> = new EventEmitter<User>();
 
   constructor(
     private userService : UserService
   ) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe(x => console.log(x));
+    this.userService.getUsers().subscribe();
     this.usernamesInPlay = ['BEAN SAFADINHO'];
   }
 
@@ -31,7 +32,11 @@ export class LoginComponent implements OnInit {
     let isValid = this.checkUsername(username);
 
     if (isValid) {
-      this.usernameEmitter.emit(username);
+      let user : User = new User(username, "online");
+
+      this.userService.createUser(user).subscribe(createdUser => {
+        this.userEmitter.emit(createdUser);
+      });
     }
   }
 
@@ -41,7 +46,9 @@ export class LoginComponent implements OnInit {
 
       return false;
     } else if (username.length > 20) {
-      this.showError("Seu nome de usuário não pode exceder 20 caracteres.")
+      this.showError("Seu nome de usuário não pode exceder 20 caracteres.");
+
+      return false;
     }else if (this.usernamesInPlay.includes(username)) {
       this.showError("Este nome de usuário já existe.");
 

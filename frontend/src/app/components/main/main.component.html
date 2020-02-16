@@ -3,7 +3,7 @@
     *ngIf="!loggedUser"
     [ngStyle]="{'opacity' : this.showLogin ? 1 : 0}"
     class="row h-100 text-center"
-    (usernameEmitter)="usernameHandler($event)"></app-login>
+    (userEmitter)="userHandler($event)"></app-login>
 
     <app-game
     *ngIf="loggedUser"

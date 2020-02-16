@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { UserService } from '../../services/user.service';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-main',
@@ -8,9 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class MainComponent implements OnInit {
 
   showLogin: boolean;
-  loggedUser: string;
+  loggedUser: User;
 
-  constructor() { }
+  constructor(
+    private userService : UserService
+  ) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -18,11 +22,11 @@ export class MainComponent implements OnInit {
     }, 1);
   }
 
-  usernameHandler(username) {
+  userHandler(user: User) {
     this.showLogin = false;
 
     setTimeout(() => {
-      this.loggedUser = username;
+      this.loggedUser = user;
     }, 1000);
   }
 

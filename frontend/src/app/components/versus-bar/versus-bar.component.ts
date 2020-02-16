@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { User } from 'src/app/models/User';
 
 @Component({
   selector: 'app-versus-bar',
@@ -7,7 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class VersusBarComponent implements OnInit {
 
-  @Input() loggedUser : string;
+  @Input() loggedUser : User;
 
   constructor() { }
 
