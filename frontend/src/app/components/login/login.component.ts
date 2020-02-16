@@ -2,15 +2,16 @@ import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/User';
 
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  username : string;
-  usernamesInPlay: Array<string>;
+  username: string;
+  usernamesInPlay: Array<string> = [];
   error : boolean;
   errorMessage : string;
 
@@ -21,8 +22,20 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.userService.getUsers().subscribe();
-    this.usernamesInPlay = ['BEAN SAFADINHO'];
+    this.userService.getUsers().subscribe(users => {
+      users.forEach(user => {
+        let now = moment();
+        let userLastUpsate = moment(user.lastUpdate);
+        let differenceInDays = now.diff(userLastUpsate, "days");
+        
+        if (differenceInDays < 1) {
+          this.usernamesInPlay.push(user.name);
+        } else {
+          this.userService.deleteUser(user);
+          //TODO: Remover AllowAnyOrigin
+        }
+      });
+    });
   }
 
   login() {

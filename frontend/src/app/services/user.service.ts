@@ -14,7 +14,7 @@ export class UserService {
   ) { }
 
   getUsers() {
-    return this.http.get<User>(this._url);
+    return this.http.get<Array<User>>(this._url);
   }
 
   createUser(user : User) {
