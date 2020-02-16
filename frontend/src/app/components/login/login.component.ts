@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,12 @@ export class LoginComponent implements OnInit {
 
   @Output() usernameEmitter : EventEmitter<string> = new EventEmitter<string>();
 
-  constructor() { }
+  constructor(
+    private userService : UserService
+  ) { }
 
   ngOnInit() {
+    this.userService.getUsers().subscribe(x => console.log(x));
     this.usernamesInPlay = ['BEAN SAFADINHO'];
   }
 
