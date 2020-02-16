@@ -8,4 +8,5 @@ export class User {
     name: string;
     status: string;
     winsInARow: number;
+    lastUpdate: Date;
 }

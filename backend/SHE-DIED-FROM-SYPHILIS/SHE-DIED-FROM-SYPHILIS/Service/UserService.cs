@@ -29,11 +29,13 @@ namespace SHE_DIED_FROM_SYPHILIS.Service {
     }
 
     public User Create(User user) {
+      user.LastUpdate = DateTime.Now;
       _users.InsertOne(user);
       return user;
     }
 
     public void Update(string id, User userIn) {
+      userIn.LastUpdate = DateTime.Now;
       _users.ReplaceOne(user => user.Id == id, userIn);
     }
 
