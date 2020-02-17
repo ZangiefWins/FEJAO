@@ -9,6 +9,7 @@ import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { GameComponent } from './components/game/game.component';
 import { VersusBarComponent } from './components/versus-bar/versus-bar.component';
+import { MatchMakingComponent } from './components/match-making/match-making.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { VersusBarComponent } from './components/versus-bar/versus-bar.component
     GameComponent,
     VersusBarComponent,
     MainComponent,
-    VersusBarComponent
+    VersusBarComponent,
+    MatchMakingComponent
   ],
   imports: [
     NgbModule,

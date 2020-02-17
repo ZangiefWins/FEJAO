@@ -35,8 +35,6 @@ namespace SHE_DIED_FROM_SYPHILIS.Controllers {
 
     [HttpPost]
     public ActionResult<User> Create(User user) {
-      user.WinsInARow = 0;
-
       var exists = _userService.GetByName(user.Name);
 
       if (exists != null) {

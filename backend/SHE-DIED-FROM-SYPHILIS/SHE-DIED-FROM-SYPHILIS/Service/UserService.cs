@@ -17,7 +17,7 @@ namespace SHE_DIED_FROM_SYPHILIS.Service {
     }
 
     public List<User> Get() {
-      return _users.Find(user => true).ToList();
+      return _users.Find(user => true).Sort("{LastUpdate: 1}").ToList();
     }
 
     public User Get(string id) {
@@ -29,6 +29,7 @@ namespace SHE_DIED_FROM_SYPHILIS.Service {
     }
 
     public User Create(User user) {
+      user.WinsInARow = 0;
       user.LastUpdate = DateTime.Now;
       _users.InsertOne(user);
       return user;

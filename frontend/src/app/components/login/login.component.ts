@@ -1,9 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/User';
-
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-login',
@@ -16,8 +13,6 @@ export class LoginComponent implements OnInit {
   error : boolean;
   errorMessage : string;
 
-  public hubConnection : HubConnection;
-
   @Output() userEmitter : EventEmitter<User> = new EventEmitter<User>();
 
   constructor(
@@ -25,29 +20,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.hubConnection = new HubConnectionBuilder().withUrl("https://localhost:5001/echo").build();
-    this.hubConnection
-      .start()
-      .then(() => console.log("Connection started!"))
-      .catch(err => console.log("Error: " + err));
-
-    this.hubConnection.on("Send", (user : User) => {
-      this.users.push(user);
-    });
-
-    this.userService.getUsers().subscribe(users => {
-      users.forEach(user => {
-        let now = moment();
-        let userLastUpsate = moment(user.lastUpdate);
-        let differenceInDays = now.diff(userLastUpsate, "days");
-        
-        if (differenceInDays < 1) {
-          this.users.push(user);
-        } else {
-          this.userService.deleteUser(user);
-        }
-      });
-    });
   }
 
   login() {
@@ -60,7 +32,6 @@ export class LoginComponent implements OnInit {
       let user : User = new User(username, "online");
 
       this.userService.createUser(user).subscribe(createdUser => {
-        this.echo(createdUser);
         this.userEmitter.emit(createdUser);
       });
     }
@@ -85,11 +56,11 @@ export class LoginComponent implements OnInit {
   }
 
   usernameIsInPlay(username): boolean {
-    this.users.forEach(user => {
-      if (user.name == username) {
+    for (let i = 0; i < this.users.length; i++) {
+      if (this.users[i].name == username) {
         return true;
       }
-    });
+    }
 
     return false;
   }
@@ -101,10 +72,6 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.error = false;
     }, 3000);
-  }
-
-  echo(createdUser : User) {
-    this.hubConnection.invoke("Echo", createdUser);
   }
 
 }

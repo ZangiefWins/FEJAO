@@ -5,8 +5,14 @@
     class="row h-100 text-center"
     (userEmitter)="userHandler($event)"></app-login>
 
-    <app-game
+    <app-match-making
     *ngIf="loggedUser"
+    class="row h-100"
+    [loggedUser]="loggedUser"
+    [users]="users"></app-match-making>
+
+    <app-game
+    *ngIf="matchFound"
     class="row h-100"
     [loggedUser]="loggedUser"></app-game>
 </div>

@@ -1,0 +1,17 @@
+<div class="col-12 my-auto">
+    <div class="container-fluid text-white">
+        <div class="row justify-content-center">
+            PERAÍ, {{this.loggedUser.name}}
+        </div>
+        <div class="row justify-content-center">
+            Estamos procurando um oponente para você...
+        </div>
+        <div class="row justify-content-center">
+            <ul class="overflow-auto oponent-viewer">
+                <li *ngFor="let user of users">
+                    {{user.name}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
