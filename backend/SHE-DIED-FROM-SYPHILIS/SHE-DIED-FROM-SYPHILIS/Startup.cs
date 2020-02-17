@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using SHE_DIED_FROM_SYPHILIS.Hubs;
 using SHE_DIED_FROM_SYPHILIS.Service;
 
 namespace SHE_DIED_FROM_SYPHILIS {
@@ -25,6 +26,7 @@ namespace SHE_DIED_FROM_SYPHILIS {
             services.AddScoped<UserService>();
             services.AddControllers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,9 +36,11 @@ namespace SHE_DIED_FROM_SYPHILIS {
             }
 
             app.UseCors(builder => {
-                builder.AllowAnyOrigin();
-                builder.AllowAnyMethod();
-                builder.AllowAnyHeader();
+                builder.WithOrigins("http://localhost:4200")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials();
+                
             });
 
             app.UseHttpsRedirection();
@@ -47,6 +51,7 @@ namespace SHE_DIED_FROM_SYPHILIS {
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
+                endpoints.MapHub<EchoHub>("/echo");
             });
         }
     }

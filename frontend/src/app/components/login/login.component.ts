@@ -1,4 +1,5 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
 import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/User';
 
@@ -11,9 +12,11 @@ import * as moment from 'moment';
 })
 export class LoginComponent implements OnInit {
   username: string;
-  usernamesInPlay: Array<string> = [];
+  users: Array<User> = [];
   error : boolean;
   errorMessage : string;
+
+  public hubConnection : HubConnection;
 
   @Output() userEmitter : EventEmitter<User> = new EventEmitter<User>();
 
@@ -22,6 +25,16 @@ export class LoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.hubConnection = new HubConnectionBuilder().withUrl("https://localhost:5001/echo").build();
+    this.hubConnection
+      .start()
+      .then(() => console.log("Connection started!"))
+      .catch(err => console.log("Error: " + err));
+
+    this.hubConnection.on("Send", (user : User) => {
+      this.users.push(user);
+    });
+
     this.userService.getUsers().subscribe(users => {
       users.forEach(user => {
         let now = moment();
@@ -29,10 +42,9 @@ export class LoginComponent implements OnInit {
         let differenceInDays = now.diff(userLastUpsate, "days");
         
         if (differenceInDays < 1) {
-          this.usernamesInPlay.push(user.name);
+          this.users.push(user);
         } else {
           this.userService.deleteUser(user);
-          //TODO: Remover AllowAnyOrigin
         }
       });
     });
@@ -48,6 +60,7 @@ export class LoginComponent implements OnInit {
       let user : User = new User(username, "online");
 
       this.userService.createUser(user).subscribe(createdUser => {
+        this.echo(createdUser);
         this.userEmitter.emit(createdUser);
       });
     }
@@ -62,13 +75,23 @@ export class LoginComponent implements OnInit {
       this.showError("Seu nome de usuário não pode exceder 20 caracteres.");
 
       return false;
-    }else if (this.usernamesInPlay.includes(username)) {
+    } else if (this.usernameIsInPlay(username)) {
       this.showError("Este nome de usuário já existe.");
 
       return false;
     }
 
     return true;
+  }
+
+  usernameIsInPlay(username): boolean {
+    this.users.forEach(user => {
+      if (user.name == username) {
+        return true;
+      }
+    });
+
+    return false;
   }
 
   showError(errorMessage) {
@@ -78,6 +101,10 @@ export class LoginComponent implements OnInit {
     setTimeout(() => {
       this.error = false;
     }, 3000);
+  }
+
+  echo(createdUser : User) {
+    this.hubConnection.invoke("Echo", createdUser);
   }
 
 }
