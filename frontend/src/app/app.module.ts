@@ -10,6 +10,7 @@ import { MainComponent } from './components/main/main.component';
 import { GameComponent } from './components/game/game.component';
 import { VersusBarComponent } from './components/versus-bar/versus-bar.component';
 import { MatchMakingComponent } from './components/match-making/match-making.component';
+import { QueueSelectorComponent } from './components/queue-selector/queue-selector.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { MatchMakingComponent } from './components/match-making/match-making.com
     VersusBarComponent,
     MainComponent,
     VersusBarComponent,
-    MatchMakingComponent
+    MatchMakingComponent,
+    QueueSelectorComponent
   ],
   imports: [
     NgbModule,

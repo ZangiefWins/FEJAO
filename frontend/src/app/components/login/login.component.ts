@@ -9,10 +9,10 @@ import { User } from 'src/app/models/User';
 })
 export class LoginComponent implements OnInit {
   username: string;
-  users: Array<User> = [];
   error : boolean;
   errorMessage : string;
 
+  @Input() users : Array<User>;
   @Output() userEmitter : EventEmitter<User> = new EventEmitter<User>();
 
   constructor(

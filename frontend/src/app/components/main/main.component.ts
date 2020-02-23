@@ -14,6 +14,7 @@ export class MainComponent implements OnInit {
 
   showLogin: boolean;
   matchFound: boolean;
+  selectedQueue: string;
   loggedUser: User;
   users: Array<User> = [];
   hubConnection : HubConnection;
@@ -41,7 +42,7 @@ export class MainComponent implements OnInit {
           if (differenceInDays < 1) {
             this.users.push(user);
           } else {
-            this.userService.deleteUser(user);
+            this.userService.deleteUser(user).subscribe();
           }
         });
       });

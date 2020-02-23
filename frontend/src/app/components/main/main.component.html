@@ -3,10 +3,17 @@
     *ngIf="!loggedUser"
     [ngStyle]="{'opacity' : this.showLogin ? 1 : 0}"
     class="row h-100 text-center"
+    [users]="users"
     (userEmitter)="userHandler($event)"></app-login>
 
+    <app-queue-selector
+    *ngIf="loggedUser && !selectedQueue"
+    class="row h-100 align-items-center"
+    (selectedQueueEmitter)="selectedQueue = $event"
+    ></app-queue-selector>
+
     <app-match-making
-    *ngIf="loggedUser"
+    *ngIf="selectedQueue"
     class="row h-100"
     [loggedUser]="loggedUser"
     [users]="users"></app-match-making>
