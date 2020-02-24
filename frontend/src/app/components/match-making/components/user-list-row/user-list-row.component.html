@@ -1,0 +1,23 @@
+<div>
+    <div class="container-fluid overflow-auto opponent-viewer" *ngIf="selectedQueue == 'selectUser'">
+        <div class="row" *ngFor="let user of users">
+            <div class="col-6">
+                <span>{{user.name}}</span>
+            </div>
+            <div class="col-3">
+                <span>{{user.status}}</span>
+            </div>
+            <div class="col-3" *ngIf="user.status == 'online'">
+                <span (click)="challenge(user);"
+                [ngStyle]="{'color': challengedUsers.includes(user) ? 'grey' : 'blue'}">Desafiar</span>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid overflow-auto opponent-viewer" *ngIf="selectedQueue == 'random'">
+        <div class="row justify-content-around" *ngFor="let user of users">
+            <div *ngIf="user.status == 'online'">
+                <span>{{user.name}}</span>
+            </div>
+        </div>
+    </div>
+</div>

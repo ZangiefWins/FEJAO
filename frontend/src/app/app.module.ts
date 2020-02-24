@@ -11,6 +11,7 @@ import { GameComponent } from './components/game/game.component';
 import { VersusBarComponent } from './components/versus-bar/versus-bar.component';
 import { MatchMakingComponent } from './components/match-making/match-making.component';
 import { QueueSelectorComponent } from './components/queue-selector/queue-selector.component';
+import { UserListRowComponent } from './components/match-making/components/user-list-row/user-list-row.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { QueueSelectorComponent } from './components/queue-selector/queue-select
     MainComponent,
     VersusBarComponent,
     MatchMakingComponent,
-    QueueSelectorComponent
+    QueueSelectorComponent,
+    UserListRowComponent
   ],
   imports: [
     NgbModule,

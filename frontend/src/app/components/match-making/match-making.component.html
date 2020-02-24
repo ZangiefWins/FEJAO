@@ -1,17 +1,26 @@
 <div class="col-12 my-auto">
-    <div class="container-fluid text-white">
+    <div class="container-fluid text-white" *ngIf="selectedQueue == 'random'">
         <div class="row justify-content-center">
             PERAÍ, {{this.loggedUser.name}}
         </div>
         <div class="row justify-content-center">
             Estamos procurando um oponente para você...
         </div>
+        <app-user-list-row
+        class="row justify-content-center"
+        [users]="users"
+        [selectedQueue]="selectedQueue"></app-user-list-row>
+    </div>
+    <div class="container-fluid text-white" *ngIf="selectedQueue == 'selectUser'">
         <div class="row justify-content-center">
-            <ul class="overflow-auto oponent-viewer">
-                <li *ngFor="let user of users">
-                    {{user.name}}
-                </li>
-            </ul>
+            {{this.loggedUser.name}}
         </div>
+        <div class="row justify-content-center">
+            VAI FILHÃO, ESCOLHE UM ONLINE AÍ...
+        </div>
+        <app-user-list-row
+        class="row justify-content-center"
+        [users]="users"
+        [selectedQueue]="selectedQueue"></app-user-list-row>
     </div>
 </div>

@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
     this.hubConnection = new HubConnectionBuilder().withUrl("https://localhost:5001/echo").build();
     this.hubConnection
       .start()
-      .then(() => console.log("Connection started!"))
+      .then(() => console.log("Main connection started!"))
       .catch(err => console.log("Error: " + err));
 
       this.userService.getUsers().subscribe(users => {
