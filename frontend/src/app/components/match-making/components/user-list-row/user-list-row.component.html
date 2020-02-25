@@ -1,5 +1,6 @@
 <div>
-    <div class="container-fluid overflow-auto opponent-viewer" *ngIf="selectedQueue == 'selectUser'">
+    <div class="container-fluid overflow-auto opponent-viewer"
+    *ngIf="selectedQueue == 'selectUser'">
         <div class="row" *ngFor="let user of users">
             <div class="col-6">
                 <span>{{user.name}}</span>

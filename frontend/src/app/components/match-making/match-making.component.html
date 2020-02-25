@@ -7,7 +7,7 @@
             Estamos procurando um oponente para você...
         </div>
         <app-user-list-row
-        class="row justify-content-center"
+        class="row"
         [users]="users"
         [loggedUser]="loggedUser"
         [selectedQueue]="selectedQueue"></app-user-list-row>
@@ -20,12 +20,14 @@
             VAI FILHÃO, ESCOLHE UM ONLINE AÍ...
         </div>
         <app-user-list-row
-        class="row align-self-center justify-content-center"
+        class="row"
+        [ngClass]="{'justify-content-center': !notificationsOpen}"
         [users]="users"
         [loggedUser]="loggedUser"
         [selectedQueue]="selectedQueue"></app-user-list-row>
     </div>
-    <div class="float-right notification-button text-center">
+    <div class="float-right notification-button text-center"
+    (click)="notificationsOpen = !notificationsOpen">
         <span>
             <i class="fas fa-bell bell-color"></i>
         </span>
