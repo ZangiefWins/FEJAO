@@ -15,6 +15,10 @@ namespace SHE_DIED_FROM_SYPHILIS.Hubs {
             Clients.Client(connectionId).SendAsync("SendChallenge", user);
         }
 
+        public void EchoChallengeAcceptance(ChallengeAcceptance challengeAcceptance, User user) {
+            Clients.Client(challengeAcceptance.User.ConnectionId).SendAsync("SendChallengeAcceptance", challengeAcceptance, user);
+        }
+
         public string GetConnectionId() {
             return Context.ConnectionId;
         }
