@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace SHE_DIED_FROM_SYPHILIS.Hubs {
     public class EchoHub : Hub {
         public void Echo(User user) {
-            Clients.All.SendAsync("Send", user);
+            Clients.AllExcept(user.ConnectionId).SendAsync("Send", user);
         }
 
         public void EchoChallenge(string connectionId, User user) {
