@@ -1,6 +1,7 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/User';
+import { HubConnection } from '@aspnet/signalr';
 
 @Component({
   selector: 'app-login',
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   errorMessage : string;
 
   @Input() users : Array<User>;
+  @Input() hubConnection : HubConnection;
   @Output() userEmitter : EventEmitter<User> = new EventEmitter<User>();
 
   constructor(
@@ -29,11 +31,7 @@ export class LoginComponent implements OnInit {
     let isValid = this.checkUsername(username);
 
     if (isValid) {
-      let user : User = new User(username, "online");
-
-      this.userService.createUser(user).subscribe(createdUser => {
-        this.userEmitter.emit(createdUser);
-      });
+      this.createUser(username);
     }
   }
 
@@ -74,4 +72,13 @@ export class LoginComponent implements OnInit {
     }, 3000);
   }
 
+  createUser(username : string) {
+    this.hubConnection.invoke("GetConnectionId").then((connectionId) => {
+      let user : User = new User(username, "online", connectionId);
+
+      this.userService.createUser(user).subscribe(createdUser => {
+        this.userEmitter.emit(createdUser);
+      });
+    });
+  }
 }

@@ -29,25 +29,17 @@ export class MainComponent implements OnInit {
     setTimeout(() => {
       this.showLogin = true;
     }, 1);
+
+    this.connectToSignalR();
+    this.subscribeToServices();
+  }
+
+  connectToSignalR() {
     this.hubConnection = new HubConnectionBuilder().withUrl("https://localhost:5001/echo").build();
     this.hubConnection
       .start()
       .then(() => console.log("Main connection started!"))
       .catch(err => console.log("Error: " + err));
-
-      this.userService.getUsers().subscribe(users => {
-        users.forEach(user => {
-          let now = moment();
-          let userLastUpsate = moment(user.lastUpdate);
-          let differenceInDays = now.diff(userLastUpsate, "days");
-          
-          if (differenceInDays < 1) {
-            this.users.push(user);
-          } else {
-            this.userService.deleteUser(user).subscribe();
-          }
-        });
-      });
 
     this.hubConnection.on("Send", (user : User) => {
       this.users.push(user);
@@ -57,11 +49,26 @@ export class MainComponent implements OnInit {
       console.log("RECEBI UM DESAFIO DESSE CARA AQUI: ");
       console.log(user);
     });
+  }
+
+  subscribeToServices() {
+    this.userService.getUsers().subscribe(users => {
+      users.forEach(user => {
+        let now = moment();
+        let userLastUpsate = moment(user.lastUpdate);
+        let differenceInDays = now.diff(userLastUpsate, "days");
+        
+        if (differenceInDays < 1) {
+          this.users.push(user);
+        } else {
+          this.userService.deleteUser(user).subscribe();
+        }
+      });
+    });
 
     this.challengeService.sendChallenge$.subscribe((user) => {
       this.echoChallenge(user);
     });
-
   }
 
   userHandler(user: User) {
@@ -69,17 +76,8 @@ export class MainComponent implements OnInit {
 
     setTimeout(() => {
       this.loggedUser = user;
-      this.assignConnectionId(user);
+      this.echo();
     }, 1000);
-  }
-
-  assignConnectionId(user: User) {
-    this.hubConnection.invoke("GetConnectionId").then((connectionId) => {
-      user.connectionId = connectionId;
-      this.userService.updateUser(user).subscribe(user => {
-        this.echo();
-      });
-    });
   }
 
   echo() {

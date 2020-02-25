@@ -4,6 +4,7 @@
     [ngStyle]="{'opacity' : this.showLogin ? 1 : 0}"
     class="row h-100 text-center"
     [users]="users"
+    [hubConnection]="hubConnection"
     (userEmitter)="userHandler($event)"></app-login>
 
     <app-queue-selector
