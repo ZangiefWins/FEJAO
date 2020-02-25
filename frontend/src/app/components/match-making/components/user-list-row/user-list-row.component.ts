@@ -10,21 +10,22 @@ import { ChallengeAcceptance } from 'src/app/models/ChallengeAcceptance';
 })
 export class UserListRowComponent implements OnInit {
 
-  @Input() users : Array<User>;
-  @Input() loggedUser : User;
-  @Input() selectedQueue : string;
+  @Input() users: Array<User>;
+  @Input() loggedUser: User;
+  @Input() selectedQueue: string;
 
-  challengedUsers : Array<User> = [];
+  challengedUsers: Array<User> = [];
+  rejectedChallenges: Array<User> = [];
 
-  constructor(private challengeService : ChallengeService) { }
+  constructor(private challengeService: ChallengeService) { }
 
   ngOnInit() {
     this.subscribeToServices();
   }
 
   subscribeToServices() {
-    this.challengeService.challengeConfirmation$.subscribe((challengeAcceptance: ChallengeAcceptance) => {
-      
+    this.challengeService.challengeRefusal$.subscribe((user: User) => {
+      this.challengedUsers = this.challengedUsers.filter(challengedUser => challengedUser.name !== user.name);
     });
   }
 
@@ -32,6 +33,10 @@ export class UserListRowComponent implements OnInit {
     //tudo deve acontecer dentro do IF, já que se deve desafiar apenas um usuário que
     //não esteja desafiado (salvo quando este recusar)
     if (!this.challengedUsers.includes(user)) {
+      if (this.rejectedChallenges.includes(user)) {
+        this.rejectedChallenges = this.rejectedChallenges.filter(rejected => rejected.name !== user.name);
+      }
+
       this.challengedUsers.push(user);
 
       this.challengeService.sendChallenge(user);

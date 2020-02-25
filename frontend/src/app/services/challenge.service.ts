@@ -17,14 +17,14 @@ export class ChallengeService {
   challengeAcceptance$: Observable<any>;
   private challengeAcceptanceSubject = new Subject<any>();
 
-  challengeConfirmation$: Observable<any>;
-  private challengeConfirmationSubject = new Subject<any>();
+  challengeRefusal$: Observable<any>;
+  private challengeRefusalSubject = new Subject<any>();
 
   constructor() {
     this.sendChallenge$ = this.sendChallengeSubject.asObservable();
     this.challenger$ = this.incomingChallengerSubject.asObservable();
     this.challengeAcceptance$ = this.challengeAcceptanceSubject.asObservable();
-    this.challengeConfirmation$  = this.challengeConfirmationSubject.asObservable();
+    this.challengeRefusal$  = this.challengeRefusalSubject.asObservable();
   }
 
   sendChallenge(user : User) {
@@ -41,7 +41,7 @@ export class ChallengeService {
     this.challengeAcceptanceSubject.next(challengeAcceptance);
   }
 
-  challengeConfirmation(challengeAcceptance : ChallengeAcceptance) {
-    this.challengeConfirmationSubject.next(challengeAcceptance);
+  challengeRefusal(user : User) {
+    this.challengeRefusalSubject.next(user);
   }
 }

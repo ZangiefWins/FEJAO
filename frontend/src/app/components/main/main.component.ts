@@ -55,7 +55,7 @@ export class MainComponent implements OnInit {
       if (challengeAcceptance.acceptance) {
         this.findOpponent(user);
       } else {
-        this.challengeService.challengeConfirmation(challengeAcceptance);
+        this.challengeService.challengeRefusal(user);
       }
     });
   }
@@ -82,7 +82,9 @@ export class MainComponent implements OnInit {
     this.challengeService.challengeAcceptance$.subscribe((challengeAcceptance : ChallengeAcceptance) => {
       this.echoChallengeAcceptance(challengeAcceptance);
 
-      this.findOpponent(challengeAcceptance.user);
+      if (challengeAcceptance.acceptance) {
+        this.findOpponent(challengeAcceptance.user);
+      }
     });
   }
 
