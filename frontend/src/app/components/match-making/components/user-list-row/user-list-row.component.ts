@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { ChallengeService } from '../../../../services/challenge.service';
+import { ChallengeAcceptance } from 'src/app/models/ChallengeAcceptance';
 
 @Component({
   selector: 'app-user-list-row',
@@ -18,6 +19,13 @@ export class UserListRowComponent implements OnInit {
   constructor(private challengeService : ChallengeService) { }
 
   ngOnInit() {
+    this.subscribeToServices();
+  }
+
+  subscribeToServices() {
+    this.challengeService.challengeConfirmation$.subscribe((challengeAcceptance: ChallengeAcceptance) => {
+      
+    });
   }
 
   challenge(user: User) {

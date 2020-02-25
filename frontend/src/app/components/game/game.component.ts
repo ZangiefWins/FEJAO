@@ -8,9 +8,10 @@ import { User } from 'src/app/models/User';
 })
 export class GameComponent implements OnInit {
 
-  @Input() loggedUser : User;
+  @Input() loggedUser: User;
+  @Input() opponent: User;
 
-  allBeans : Array<Array<string>> = new Array<Array<string>>();
+  allBeans: Array<Array<string>> = new Array<Array<string>>();
 
   constructor() { }
 

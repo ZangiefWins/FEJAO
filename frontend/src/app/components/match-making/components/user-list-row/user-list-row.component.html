@@ -9,8 +9,9 @@
                 <span>{{user.status}}</span>
             </div>
             <div class="col-3" *ngIf="user.status == 'online'">
-                <span (click)="challenge(user);"
-                [ngStyle]="{'color': challengedUsers.includes(user) ? 'grey' : 'blue'}">Desafiar</span>
+                <span (click)="challenge(user)"
+                [class.unchallenged-user]="!challengedUsers.includes(user)"
+                [class.challenged-user]="challengedUsers.includes(user)">{{!challengedUsers.includes(user) ? 'Desafiar' : 'Desafiado'}}</span>
             </div>
         </div>
     </div>

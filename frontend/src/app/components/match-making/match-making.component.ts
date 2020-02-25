@@ -28,5 +28,11 @@ export class MatchMakingComponent implements OnInit {
       this.challengers.push(user);
     });
   }
+  
+  updateChallengeStatus(challenger: User, acceptance: boolean) {
+    this.challengeService.challengeAcceptance(challenger, acceptance);
+
+    this.challengers = this.challengers.filter(storedChallenger => storedChallenger !== challenger);
+  }
 
 }

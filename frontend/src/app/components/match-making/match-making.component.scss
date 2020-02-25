@@ -2,7 +2,6 @@
     height: 30px; //deve considerar daqui
     margin-bottom: 10px;
     width: 40px;
-    border: 1px solid yellow;
 }
 
 .bell-color {
@@ -21,4 +20,13 @@
     background-color: red;
     padding: 2px;
     border-radius: 50%;
+}
+
+.notifications-menu {
+    position: absolute;
+    background: rgb(231, 231, 136, .5);
+    right: 15px;
+    bottom: 39px;
+    width: 300px;
+    height: calc(100vh - 40px);
 }

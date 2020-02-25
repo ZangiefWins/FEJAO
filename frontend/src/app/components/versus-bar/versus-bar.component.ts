@@ -8,7 +8,8 @@ import { User } from 'src/app/models/User';
 })
 export class VersusBarComponent implements OnInit {
 
-  @Input() loggedUser : User;
+  @Input() loggedUser: User;
+  @Input() opponent: User;
 
   constructor() { }
 

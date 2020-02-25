@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/User';
 
 import * as moment from 'moment';
+import { ChallengeAcceptance } from 'src/app/models/ChallengeAcceptance';
 
 @Component({
   selector: 'app-main',
@@ -15,6 +16,7 @@ export class MainComponent implements OnInit {
 
   showLogin: boolean;
   matchFound: boolean;
+  opponent: User;
   selectedQueue: string;
   loggedUser: User;
   users: Array<User> = [];
@@ -41,12 +43,20 @@ export class MainComponent implements OnInit {
       .then(() => console.log("Main connection started!"))
       .catch(err => console.log("Error: " + err));
 
-    this.hubConnection.on("Send", (user : User) => {
+    this.hubConnection.on("Send", (user: User) => {
       this.users.push(user);
     });
 
-    this.hubConnection.on("SendChallenge", (user : User) => {
+    this.hubConnection.on("SendChallenge", (user: User) => {
       this.challengeService.sendIncomingChallenger(user);
+    });
+
+    this.hubConnection.on("SendChallengeAcceptance", (challengeAcceptance: ChallengeAcceptance, user: User) => {
+      if (challengeAcceptance.acceptance) {
+        this.findOpponent(user);
+      } else {
+        this.challengeService.challengeConfirmation(challengeAcceptance);
+      }
     });
   }
 
@@ -65,9 +75,20 @@ export class MainComponent implements OnInit {
       });
     });
 
-    this.challengeService.sendChallenge$.subscribe((user) => {
+    this.challengeService.sendChallenge$.subscribe((user : User) => {
       this.echoChallenge(user);
     });
+
+    this.challengeService.challengeAcceptance$.subscribe((challengeAcceptance : ChallengeAcceptance) => {
+      this.echoChallengeAcceptance(challengeAcceptance);
+
+      this.findOpponent(challengeAcceptance.user);
+    });
+  }
+
+  findOpponent(opponent: User) {
+    this.opponent = opponent;
+    this.matchFound = true;
   }
 
   userHandler(user: User) {
@@ -85,6 +106,10 @@ export class MainComponent implements OnInit {
 
   echoChallenge(challengedUser : User) {
     this.hubConnection.invoke("EchoChallenge", challengedUser.connectionId, this.loggedUser);
+  }
+
+  echoChallengeAcceptance(challengeAcceptance : ChallengeAcceptance) {
+    this.hubConnection.invoke("EchoChallengeAcceptance", challengeAcceptance, this.loggedUser);
   }
 
 }

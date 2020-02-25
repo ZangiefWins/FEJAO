@@ -3,10 +3,11 @@
     width: 80vw;
 }
 
-.unchallenged-opponent {
+.unchallenged-user {
     cursor: pointer;
+    color: blue;
 }
 
-ul {
-    list-style-type: none;
+.challenged-user {
+    color: grey;
 }

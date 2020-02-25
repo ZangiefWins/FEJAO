@@ -20,17 +20,38 @@
             VAI FILHÃO, ESCOLHE UM ONLINE AÍ...
         </div>
         <app-user-list-row
-        class="row"
-        [ngClass]="{'justify-content-center': !notificationsOpen}"
+        class="row justify-content-center"
         [users]="users"
         [loggedUser]="loggedUser"
         [selectedQueue]="selectedQueue"></app-user-list-row>
     </div>
-    <div class="float-right notification-button text-center"
+    <div class="float-right notification-button text-center border border-warning"
     (click)="notificationsOpen = !notificationsOpen">
         <span>
             <i class="fas fa-bell bell-color"></i>
         </span>
         <span class="badge" *ngIf="challengers.length > 0">{{challengers.length}}</span>
+    </div>
+</div>
+<div class="notifications-menu border border-warning" *ngIf="notificationsOpen">
+    <div *ngIf="challengers.length > 0" class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-12 text-dark text-center">
+                <div *ngFor="let challenger of challengers">
+                    <span>{{challenger.name}} desafiou você.</span><br>
+                    <span (click)="updateChallengeStatus(challenger, true)">Aceitar</span>
+                     | 
+                    <span (click)="updateChallengeStatus(challenger, false)">Recusar</span>
+                    <br><hr>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="challengers.length == 0" class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-12 my-auto text-dark text-center">
+                <b>NINGUÉM TE DESAFIOU AINDA</b>
+            </div>
+        </div>
     </div>
 </div>

@@ -14,7 +14,7 @@
     ></app-queue-selector>
 
     <app-match-making
-    *ngIf="selectedQueue"
+    *ngIf="selectedQueue && !matchFound"
     class="row h-100"
     [loggedUser]="loggedUser"
     [users]="users"
@@ -23,5 +23,6 @@
     <app-game
     *ngIf="matchFound"
     class="row h-100"
-    [loggedUser]="loggedUser"></app-game>
+    [loggedUser]="loggedUser"
+    [opponent]="opponent"></app-game>
 </div>
