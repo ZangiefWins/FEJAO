@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { ChallengeService } from '../../services/challenge.service';
 import { UserService } from '../../services/user.service';
 import { User } from 'src/app/models/User';
 
@@ -20,7 +21,8 @@ export class MainComponent implements OnInit {
   hubConnection : HubConnection;
 
   constructor(
-    private userService : UserService
+    private userService : UserService,
+    private challengeService : ChallengeService
   ) { }
 
   ngOnInit() {
@@ -51,6 +53,15 @@ export class MainComponent implements OnInit {
       this.users.push(user);
     });
 
+    this.hubConnection.on("SendChallenge", (user : User) => {
+      console.log("RECEBI UM DESAFIO DESSE CARA AQUI: ");
+      console.log(user);
+    });
+
+    this.challengeService.sendChallenge$.subscribe((user) => {
+      this.echoChallenge(user);
+    });
+
   }
 
   userHandler(user: User) {
@@ -59,7 +70,6 @@ export class MainComponent implements OnInit {
     setTimeout(() => {
       this.loggedUser = user;
       this.assignConnectionId(user);
-      this.echo();
     }, 1000);
   }
 
@@ -67,10 +77,7 @@ export class MainComponent implements OnInit {
     this.hubConnection.invoke("GetConnectionId").then((connectionId) => {
       user.connectionId = connectionId;
       this.userService.updateUser(user).subscribe(user => {
-        console.log("Assigned: ");
-        console.log(user);
-
-        this.echoChallenge();
+        this.echo();
       });
     });
   }
@@ -79,8 +86,8 @@ export class MainComponent implements OnInit {
     this.hubConnection.invoke("Echo", this.loggedUser);
   }
 
-  echoChallenge() {
-    this.hubConnection.invoke("EchoChallenge", "1_DNAdoPSIiz4uImcKPjdw", this.loggedUser);
+  echoChallenge(challengedUser : User) {
+    this.hubConnection.invoke("EchoChallenge", challengedUser.connectionId, this.loggedUser);
   }
 
 }

@@ -9,6 +9,7 @@
         <app-user-list-row
         class="row justify-content-center"
         [users]="users"
+        [loggedUser]="loggedUser"
         [selectedQueue]="selectedQueue"></app-user-list-row>
     </div>
     <div class="container-fluid text-white" *ngIf="selectedQueue == 'selectUser'">
@@ -21,6 +22,7 @@
         <app-user-list-row
         class="row justify-content-center"
         [users]="users"
+        [loggedUser]="loggedUser"
         [selectedQueue]="selectedQueue"></app-user-list-row>
     </div>
 </div>

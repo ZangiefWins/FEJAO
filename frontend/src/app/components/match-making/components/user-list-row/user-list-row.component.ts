@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
+import { ChallengeService } from '../../../../services/challenge.service';
 
 @Component({
   selector: 'app-user-list-row',
@@ -9,11 +10,12 @@ import { User } from 'src/app/models/User';
 export class UserListRowComponent implements OnInit {
 
   @Input() users : Array<User>;
+  @Input() loggedUser : User;
   @Input() selectedQueue : string;
 
   challengedUsers : Array<User> = [];
 
-  constructor() { }
+  constructor(private challengeService : ChallengeService) { }
 
   ngOnInit() {
   }
@@ -23,6 +25,8 @@ export class UserListRowComponent implements OnInit {
     //não esteja desafiado (salvo quando este recusar)
     if (!this.challengedUsers.includes(user)) {
       this.challengedUsers.push(user);
+
+      this.challengeService.sendChallenge(user);
     }
   }
 
