@@ -15,6 +15,9 @@ namespace SHE_DIED_FROM_SYPHILIS.Models {
     public string Status { get; set; }
     [BsonElement("WinsInARow")]
     public int WinsInARow { get; set; }
+    [BsonElement("LastUpdate")]
     public DateTime LastUpdate { get; set; }
+    [BsonElement("ConnectionId")]
+    public string ConnectionId { get; set; }
     }
 }
