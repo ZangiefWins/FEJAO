@@ -46,8 +46,7 @@ export class MainComponent implements OnInit {
     });
 
     this.hubConnection.on("SendChallenge", (user : User) => {
-      console.log("RECEBI UM DESAFIO DESSE CARA AQUI: ");
-      console.log(user);
+      this.challengeService.sendIncomingChallenger(user);
     });
   }
 

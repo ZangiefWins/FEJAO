@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ChallengeService } from '../../services/challenge.service';
 import { User } from 'src/app/models/User';
 
 @Component({
@@ -12,10 +13,20 @@ export class MatchMakingComponent implements OnInit {
   @Input() users : Array<User>;
   @Input() selectedQueue: String;
 
-  constructor() { }
+  challengers : Array<User> = [];
+
+  constructor(
+    private challengeService : ChallengeService
+  ) { }
 
   ngOnInit() {
+    this.subcribeToServices();
+  }
 
+  subcribeToServices() {
+    this.challengeService.challenger$.subscribe((user) => {
+      this.challengers.push(user);
+    });
   }
 
 }
