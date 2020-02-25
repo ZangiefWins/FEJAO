@@ -9,4 +9,5 @@ export class User {
     status: string;
     winsInARow: number;
     lastUpdate: Date;
+    connectionId: string;
 }

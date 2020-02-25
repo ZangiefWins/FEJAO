@@ -58,12 +58,29 @@ export class MainComponent implements OnInit {
 
     setTimeout(() => {
       this.loggedUser = user;
+      this.assignConnectionId(user);
       this.echo();
     }, 1000);
   }
 
+  assignConnectionId(user: User) {
+    this.hubConnection.invoke("GetConnectionId").then((connectionId) => {
+      user.connectionId = connectionId;
+      this.userService.updateUser(user).subscribe(user => {
+        console.log("Assigned: ");
+        console.log(user);
+
+        this.echoChallenge();
+      });
+    });
+  }
+
   echo() {
     this.hubConnection.invoke("Echo", this.loggedUser);
+  }
+
+  echoChallenge() {
+    this.hubConnection.invoke("EchoChallenge", "1_DNAdoPSIiz4uImcKPjdw", this.loggedUser);
   }
 
 }
