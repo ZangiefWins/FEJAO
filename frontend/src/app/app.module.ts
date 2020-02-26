@@ -8,10 +8,11 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './components/login/login.component';
 import { MainComponent } from './components/main/main.component';
 import { GameComponent } from './components/game/game.component';
-import { VersusBarComponent } from './components/versus-bar/versus-bar.component';
+import { VersusBarComponent } from './components/game/components/versus-bar/versus-bar.component';
 import { MatchMakingComponent } from './components/match-making/match-making.component';
 import { QueueSelectorComponent } from './components/queue-selector/queue-selector.component';
 import { UserListRowComponent } from './components/match-making/components/user-list-row/user-list-row.component';
+import { BoardComponent } from './components/game/components/board/board.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { UserListRowComponent } from './components/match-making/components/user-
     VersusBarComponent,
     MatchMakingComponent,
     QueueSelectorComponent,
-    UserListRowComponent
+    UserListRowComponent,
+    BoardComponent
   ],
   imports: [
     NgbModule,
