@@ -17,7 +17,6 @@ export class MainComponent implements OnInit {
   showLogin: boolean;
   matchFound: boolean;
   opponent: User;
-  selectedQueue: string;
   loggedUser: User;
   users: Array<User> = [];
   hubConnection : HubConnection;
@@ -43,7 +42,7 @@ export class MainComponent implements OnInit {
       .then(() => console.log("Main connection started!"))
       .catch(err => console.log("Error: " + err));
 
-    this.hubConnection.on("Send", (user: User) => {
+    this.hubConnection.on("SendUserSelect", (user: User) => {
       this.users.push(user);
     });
 
@@ -98,12 +97,8 @@ export class MainComponent implements OnInit {
 
     setTimeout(() => {
       this.loggedUser = user;
-      this.echo();
+      this.hubConnection.invoke("EchoUser", this.loggedUser);
     }, 1000);
-  }
-
-  echo() {
-    this.hubConnection.invoke("Echo", this.loggedUser);
   }
 
   echoChallenge(challengedUser : User) {

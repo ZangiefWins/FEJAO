@@ -12,7 +12,6 @@ export class UserListRowComponent implements OnInit {
 
   @Input() users: Array<User>;
   @Input() loggedUser: User;
-  @Input() selectedQueue: string;
 
   challengedUsers: Array<User> = [];
   rejectedChallenges: Array<User> = [];

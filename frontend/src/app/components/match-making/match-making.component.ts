@@ -11,7 +11,6 @@ export class MatchMakingComponent implements OnInit {
 
   @Input() loggedUser : User;
   @Input() users : Array<User>;
-  @Input() selectedQueue: String;
 
   challengers : Array<User> = [];
 

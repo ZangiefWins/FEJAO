@@ -1,6 +1,5 @@
 <div>
-    <div class="container-fluid overflow-auto opponent-viewer"
-    *ngIf="selectedQueue == 'selectUser'">
+    <div class="container-fluid overflow-auto opponent-viewer">
         <div class="row" *ngFor="let user of users">
             <div class="col-6">
                 <span>{{user.name}}</span>
@@ -12,13 +11,6 @@
                 <span (click)="challenge(user)"
                 [class.unchallenged-user]="!challengedUsers.includes(user)"
                 [class.challenged-user]="challengedUsers.includes(user)">{{!challengedUsers.includes(user) ? 'Desafiar' : 'Desafiado'}}</span>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid overflow-auto opponent-viewer" *ngIf="selectedQueue == 'random'">
-        <div class="row justify-content-around" *ngFor="let user of users">
-            <div *ngIf="user.status == 'online'">
-                <span>{{user.name}}</span>
             </div>
         </div>
     </div>

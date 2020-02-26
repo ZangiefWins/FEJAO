@@ -1,18 +1,5 @@
 <div class="col-12">
-    <div class="container-fluid matchmaking-height text-white" *ngIf="selectedQueue == 'random'">
-        <div class="row justify-content-center">
-            PERAÍ, {{this.loggedUser.name}}
-        </div>
-        <div class="row justify-content-center">
-            Estamos procurando um oponente para você...
-        </div>
-        <app-user-list-row
-        class="row"
-        [users]="users"
-        [loggedUser]="loggedUser"
-        [selectedQueue]="selectedQueue"></app-user-list-row>
-    </div>
-    <div class="container-fluid matchmaking-height text-white" *ngIf="selectedQueue == 'selectUser'">
+    <div class="container-fluid matchmaking-height text-white">
         <div class="row justify-content-center">
             {{this.loggedUser.name}}
         </div>
@@ -22,8 +9,7 @@
         <app-user-list-row
         class="row justify-content-center"
         [users]="users"
-        [loggedUser]="loggedUser"
-        [selectedQueue]="selectedQueue"></app-user-list-row>
+        [loggedUser]="loggedUser"></app-user-list-row>
     </div>
     <div class="float-right notification-button text-center border border-warning"
     (click)="notificationsOpen = !notificationsOpen">

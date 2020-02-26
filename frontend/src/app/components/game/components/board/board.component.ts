@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { Bean } from 'src/app/models/Bean';
+import { HubConnection } from '@aspnet/signalr';
+import { Board } from 'src/app/models/Board';
 
 @Component({
   selector: 'app-board',
@@ -11,21 +13,27 @@ export class BoardComponent implements OnInit {
 
   @Input() loggedUser: User;
   @Input() opponent: User;
+  @Input() hubConnection: HubConnection;
 
-  board: Array<Array<Bean>> = new Array<Array<Bean>>();
+  board: Board = new Board();
 
   constructor() { }
 
   ngOnInit() {
+    this.hubConnection.on("SendBoard", (board: Board) => {
+      this.board = board;
+    });
+
     if (this.loggedUser.id < this.opponent.id) {
       this.defineBeanArrays();
+      this.echoBoard();
     }
   }
 
   defineBeanArrays() {
     for (let i = 0; i < 3; i++) {
       let size = this.getArraySize(i);
-      this.board[i] = this.generateBeanArray(size, i);
+      this.board.beanLots[i] = this.generateBeanArray(size, i);
     }
   }
 
@@ -37,11 +45,11 @@ export class BoardComponent implements OnInit {
     } else if (arrayIndex == 1) {
       do {
         size = this.getRandomArbitrary(5, 21);
-      } while (size == this.board[0].length);
+      } while (size == this.board.beanLots[0].length);
     } else if (arrayIndex == 2) {
       do {
         size = this.getRandomArbitrary(5, 21);
-      } while (size == this.board[0].length || size == this.board[0].length);
+      } while (size == this.board.beanLots[0].length || size == this.board.beanLots[0].length);
     }
 
     return size;
@@ -59,6 +67,11 @@ export class BoardComponent implements OnInit {
 
   beanNameGenerator(): string {
     return "BEAN";
+  }
+
+  echoBoard() {
+    debugger;
+    this.hubConnection.invoke("EchoBoard", this.board, this.loggedUser, this.opponent);
   }
 
   //Returns a random number between min (inclusive) and max (exclusive)
