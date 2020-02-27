@@ -74,7 +74,7 @@ export class LoginComponent implements OnInit {
 
   createUser(username : string) {
     this.hubConnection.invoke("GetConnectionId").then((connectionId) => {
-      let user : User = new User(username, "online", connectionId);
+      let user : User = new User(username, connectionId);
 
       this.userService.createUser(user).subscribe(createdUser => {
         this.userEmitter.emit(createdUser);

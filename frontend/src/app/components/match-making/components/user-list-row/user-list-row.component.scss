@@ -5,7 +5,7 @@
 
 .unchallenged-user {
     cursor: pointer;
-    color: blue;
+    color: rgb(212, 45, 45);
 }
 
 .challenged-user {
@@ -14,4 +14,12 @@
 
 .rejected-user {
     color: red;
+}
+
+.online {
+    color: rgb(120, 177, 89);
+}
+
+.afk {
+    color: rgb(255, 172, 51);
 }

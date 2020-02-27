@@ -4,10 +4,12 @@
             <div class="col-6">
                 <span>{{user.name}}</span>
             </div>
-            <div class="col-3">
-                <span>{{user.status}}</span>
+            <div class="col-4">
+                <span
+                [class.online]="getMinuteDifference(user.lastUpdate) > -20"
+                [class.afk]="getMinuteDifference(user.lastUpdate) <= -20">{{getUserStatusLabel(user.lastUpdate)}}</span>
             </div>
-            <div class="col-3" *ngIf="user.status == 'online'">
+            <div class="col-2">
                 <span (click)="challenge(user)"
                 [class.unchallenged-user]="!challengedUsers.includes(user)"
                 [class.challenged-user]="challengedUsers.includes(user)">{{!challengedUsers.includes(user) ? 'Desafiar' : 'Desafiado'}}</span>

@@ -1,7 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { ChallengeService } from '../../../../services/challenge.service';
-import { ChallengeAcceptance } from 'src/app/models/ChallengeAcceptance';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-user-list-row',
@@ -19,6 +20,7 @@ export class UserListRowComponent implements OnInit {
   constructor(private challengeService: ChallengeService) { }
 
   ngOnInit() {
+    moment.locale('pt-br');
     this.subscribeToServices();
   }
 
@@ -40,6 +42,25 @@ export class UserListRowComponent implements OnInit {
 
       this.challengeService.sendChallenge(user);
     }
+  }
+
+  getUserStatusLabel(lastUpdate: Date) {
+    let minutes = this.getMinuteDifference(lastUpdate);
+
+    if (minutes > -20) {
+      return "Online";
+    } else {
+      return `Ausente ${moment(moment(lastUpdate)).fromNow()}`; 
+    }
+  }
+
+  getMinuteDifference(lastUpdate: Date) {
+    let lasUpdateMoment = moment(lastUpdate);
+
+    let timeDifference = moment.duration(lasUpdateMoment.diff(moment()));
+    let minutes = timeDifference.asMinutes();
+
+    return minutes;
   }
 
 }
