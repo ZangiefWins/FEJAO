@@ -17,7 +17,7 @@ namespace SHE_DIED_FROM_SYPHILIS.Service {
     }
 
     public List<User> Get() {
-      return _users.Find(user => true).Sort("{LastUpdate: 1}").ToList();
+      return _users.Find(user => true).Sort("{LastUpdate: -1}").ToList();
     }
 
     public User Get(string id) {
