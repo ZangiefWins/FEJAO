@@ -19,6 +19,11 @@ namespace SHE_DIED_FROM_SYPHILIS.Hubs {
             Clients.Client(challengeAcceptance.User.ConnectionId).SendAsync("SendChallengeAcceptance", challengeAcceptance, user);
         }
 
+        public void EchoFirstToPlay(User first, User second) {
+            Clients.Client(first.ConnectionId).SendAsync("SendFirstToPlay", first);
+            Clients.Client(second.ConnectionId).SendAsync("SendFirstToPlay", first);
+        }
+
         public void EchoBoard(Board board, User user1, User user2) {
             Clients.Client(user1.ConnectionId).SendAsync("SendBoard", board);
             Clients.Client(user2.ConnectionId).SendAsync("SendBoard", board);
