@@ -5,3 +5,13 @@
 .bean {
     cursor: pointer;
 }
+
+.make-play-button {
+    cursor: pointer;
+    color: rgb(100, 100, 240);
+}
+
+.disabled-button {
+    cursor: not-allowed;
+    color: #FFFFFF;
+}

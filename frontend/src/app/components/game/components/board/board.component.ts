@@ -74,7 +74,6 @@ export class BoardComponent implements OnInit {
   }
 
   echoBoard() {
-    debugger;
     this.hubConnection.invoke("EchoBoard", this.board, this.loggedUser, this.opponent);
   }
 
@@ -110,5 +109,15 @@ export class BoardComponent implements OnInit {
 
   isBeanLotSelected(lot: number) {
     return this.currentSelectedLot == -1 || this.currentSelectedLot == lot;
+  }
+
+  makePlay() {
+    if (this.selectedBeans.length > 0) {
+      this.selectedBeans.forEach(selectedBean => {
+        this.board.beanLots[this.currentSelectedLot] = this.board.beanLots[this.currentSelectedLot].filter(bean => bean.id !== selectedBean.id);
+      });
+
+      this.echoBoard();
+    }
   }
 }

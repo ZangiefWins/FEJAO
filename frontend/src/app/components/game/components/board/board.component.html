@@ -1,6 +1,6 @@
-<div class="col-12 my-auto">
-    <div class="container h-100 text-white">
-        <div class="row h-100">
+<div class="col-12 h-100 my-auto">
+    <div class="container-fluid h-100 text-white">
+        <div class="row">
             <div *ngFor="let beanLot of board.beanLots" class="col-4 my-auto">
                 <span
                 class="bean"
@@ -9,6 +9,13 @@
                 *ngFor="let bean of beanLot">
                     {{bean.name}}
                 </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <span (click)="makePlay()"
+                class="make-play-button"
+                [class.disabled-button]="selectedBeans.length == 0">Fazer jogada</span>
             </div>
         </div>
     </div>
