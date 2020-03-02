@@ -13,7 +13,7 @@ export class BoardComponent implements OnInit {
 
   @Input() loggedUser: User;
   @Input() opponent: User;
-  @Input() firstToPlay: User;
+  @Input() currentPlayer: User;
   @Input() hubConnection: HubConnection;
 
   board: Board = new Board();
@@ -24,8 +24,6 @@ export class BoardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log("first");
-    console.log(this.firstToPlay);
     this.hubConnection.on("SendBoard", (board: Board) => {
       this.board = board;
     });
@@ -37,7 +35,6 @@ export class BoardComponent implements OnInit {
     if (this.loggedUser.id < this.opponent.id) {
       this.defineBeanArrays();
       this.echoBoard();
-      this.determineFirstToPlay();
     }
   }
 
@@ -91,19 +88,19 @@ export class BoardComponent implements OnInit {
     return Math.random() * (max - min) + min;
   }
 
-  determineFirstToPlay() {
-    
-  }
-
   manageBeanSelection(bean: Bean) {
-    if (this.selectedBeans.includes(bean)) {
-      this.unselectBean(bean);
-    } else {
-      if (this.isBeanLotSelected(bean.lot)) {
-        this.selectBean(bean);
+    if (this.currentPlayer.id == this.loggedUser.id) {
+      if (this.selectedBeans.includes(bean)) {
+        this.unselectBean(bean);
       } else {
-        //lançar erro
+        if (this.isBeanLotSelected(bean.lot)) {
+          this.selectBean(bean);
+        } else {
+          //lançar erro de lote incorreto
+        }
       }
+    } else {
+      //lançar erro de não está na sua vez
     }
   }
 
@@ -125,12 +122,29 @@ export class BoardComponent implements OnInit {
   }
 
   makePlay() {
-    if (this.selectedBeans.length > 0) {
+    if (this.selectedBeans.length > 0 && this.currentPlayer.id == this.loggedUser.id) {
       this.selectedBeans.forEach(selectedBean => {
         this.board.beanLots[this.currentSelectedLot] = this.board.beanLots[this.currentSelectedLot].filter(bean => bean.id !== selectedBean.id);
       });
 
+      this.emptySelectedBeans();
+
       this.echoBoard();
+
+      this.echoSwitchPlayerOrder();
     }
+  }
+
+  echoSwitchPlayerOrder() {
+    if (this.currentPlayer.id == this.loggedUser.id) {
+      this.hubConnection.invoke("EchoPlayerOrder", this.opponent, this.loggedUser);
+    } else {
+      this.hubConnection.invoke("EchoPlayerOrder", this.loggedUser, this.opponent);
+    }
+  }
+
+  emptySelectedBeans() {
+    this.currentSelectedLot = -1;
+    this.selectedBeans = [];
   }
 }

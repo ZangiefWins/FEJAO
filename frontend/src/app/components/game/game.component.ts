@@ -28,14 +28,14 @@ export class GameComponent implements OnInit {
 
   determineFirstToPlay() {
     if (Math.random() >= 0.5) {
-      this.hubConnection.invoke("EchoFirstToPlay", this.loggedUser, this.opponent);
+      this.hubConnection.invoke("EchoPlayerOrder", this.loggedUser, this.opponent);
     } else {
-      this.hubConnection.invoke("EchoFirstToPlay", this.opponent, this.loggedUser);
+      this.hubConnection.invoke("EchoPlayerOrder", this.opponent, this.loggedUser);
     }
   }
 
   listenToSignalRMethods() {
-    this.hubConnection.on("SendFirstToPlay", (user: User) => {
+    this.hubConnection.on("SendPlayerOrder", (user: User) => {
       this.firstToPlay = user;
     });
   }

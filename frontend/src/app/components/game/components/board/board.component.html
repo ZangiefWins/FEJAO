@@ -12,10 +12,13 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="col-6">
                 <span (click)="makePlay()"
                 class="make-play-button"
                 [class.disabled-button]="selectedBeans.length == 0">Fazer jogada</span>
+            </div>
+            <div class="col-6">
+                <span class="float-right">Vez de: {{currentPlayer.name}}</span>
             </div>
         </div>
     </div>
