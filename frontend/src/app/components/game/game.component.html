@@ -5,9 +5,11 @@
         [loggedUser]="loggedUser"
         [opponent]="opponent"></app-versus-bar>
         <app-board
+        *ngIf="firstToPlay"
         class="row"
         [loggedUser]="loggedUser"
         [opponent]="opponent"
+        [firstToPlay]="firstToPlay"
         [hubConnection]="hubConnection">
         </app-board>
     </div>

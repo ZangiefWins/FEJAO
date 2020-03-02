@@ -13,22 +13,31 @@ export class BoardComponent implements OnInit {
 
   @Input() loggedUser: User;
   @Input() opponent: User;
+  @Input() firstToPlay: User;
   @Input() hubConnection: HubConnection;
 
   board: Board = new Board();
   selectedBeans: Array<Bean> = [];
   currentSelectedLot: number = -1;
+  userAtPlay: User;
 
   constructor() { }
 
   ngOnInit() {
+    console.log("first");
+    console.log(this.firstToPlay);
     this.hubConnection.on("SendBoard", (board: Board) => {
       this.board = board;
+    });
+
+    this.hubConnection.on("SendFirstToPlay", (user: User) => {
+      this.userAtPlay = user;
     });
 
     if (this.loggedUser.id < this.opponent.id) {
       this.defineBeanArrays();
       this.echoBoard();
+      this.determineFirstToPlay();
     }
   }
 
@@ -80,6 +89,10 @@ export class BoardComponent implements OnInit {
   //Returns a random number between min (inclusive) and max (exclusive)
   getRandomArbitrary(min: number, max: number) {
     return Math.random() * (max - min) + min;
+  }
+
+  determineFirstToPlay() {
+    
   }
 
   manageBeanSelection(bean: Bean) {
