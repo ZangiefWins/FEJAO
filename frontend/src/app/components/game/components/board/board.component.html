@@ -2,7 +2,11 @@
     <div class="container h-100 text-white">
         <div class="row h-100">
             <div *ngFor="let beanLot of board.beanLots" class="col-4 my-auto">
-                <span *ngFor="let bean of beanLot">
+                <span
+                class="bean"
+                [class.selected-bean]="selectedBeans.includes(bean)"
+                (click)="manageBeanSelection(bean)"
+                *ngFor="let bean of beanLot">
                     {{bean.name}}
                 </span>
             </div>

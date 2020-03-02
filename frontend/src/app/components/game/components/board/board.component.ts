@@ -16,6 +16,8 @@ export class BoardComponent implements OnInit {
   @Input() hubConnection: HubConnection;
 
   board: Board = new Board();
+  selectedBeans: Array<Bean> = [];
+  currentSelectedLot: number = -1;
 
   constructor() { }
 
@@ -35,6 +37,8 @@ export class BoardComponent implements OnInit {
       let size = this.getArraySize(i);
       this.board.beanLots[i] = this.generateBeanArray(size, i);
     }
+
+    console.log(this.board);
   }
 
   getArraySize(arrayIndex: number): number {
@@ -79,4 +83,32 @@ export class BoardComponent implements OnInit {
     return Math.random() * (max - min) + min;
   }
 
+  manageBeanSelection(bean: Bean) {
+    if (this.selectedBeans.includes(bean)) {
+      this.unselectBean(bean);
+    } else {
+      if (this.isBeanLotSelected(bean.lot)) {
+        this.selectBean(bean);
+      } else {
+        //lançar erro
+      }
+    }
+  }
+
+  selectBean(bean: Bean) {
+    this.currentSelectedLot = bean.lot;
+    this.selectedBeans.push(bean);
+  }
+
+  unselectBean(bean: Bean) {
+    this.selectedBeans = this.selectedBeans.filter(selectedBean => bean.id !== selectedBean.id);
+
+    if (this.selectedBeans.length == 0) {
+      this.currentSelectedLot = -1;
+    }
+  }
+
+  isBeanLotSelected(lot: number) {
+    return this.currentSelectedLot == -1 || this.currentSelectedLot == lot;
+  }
 }

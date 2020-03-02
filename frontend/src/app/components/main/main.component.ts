@@ -43,7 +43,7 @@ export class MainComponent implements OnInit {
       .catch(err => console.log("Error: " + err));
 
     this.hubConnection.on("SendUserSelect", (user: User) => {
-      this.users.push(user);
+      this.users.unshift(user);
     });
 
     this.hubConnection.on("SendChallenge", (user: User) => {
