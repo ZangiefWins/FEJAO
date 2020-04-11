@@ -1,10 +1,10 @@
 <div class="col-12">
     <div class="container-fluid matchmaking-height text-white">
         <div class="row justify-content-center">
-            {{this.loggedUser.name}}
+            {{this.loggedUser.name}},
         </div>
         <div class="row justify-content-center">
-            VAI FILHÃO, ESCOLHE UM ONLINE AÍ...
+            ESCOLHA SEU OPONENTE
         </div>
         <app-user-list-row
         class="row justify-content-center"
@@ -23,11 +23,18 @@
     <div *ngIf="challengers.length > 0" class="container-fluid h-100">
         <div class="row h-100">
             <div class="col-12 text-dark text-center">
-                <div *ngFor="let challenger of challengers">
-                    <span>{{challenger.name}} desafiou você.</span><br>
-                    <span (click)="updateChallengeStatus(challenger, true)">Aceitar</span>
-                     | 
-                    <span (click)="updateChallengeStatus(challenger, false)">Recusar</span>
+                <div class="container-fluid" *ngFor="let challenger of challengers">
+                    <div class="row mx-auto justify-content-center">
+                        <span>{{challenger.name}} desafiou você.</span><br>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <span class="accept-button" (click)="updateChallengeStatus(challenger, true)">Aceitar</span>
+                        </div>
+                        <div class="col-6">
+                            <span class="reject-button" (click)="updateChallengeStatus(challenger, false)">Recusar</span>
+                        </div>
+                    </div>
                     <br><hr>
                 </div>
             </div>

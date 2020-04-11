@@ -30,3 +30,13 @@
     width: 300px;
     height: calc(100vh - 40px);
 }
+
+.accept-button {
+    color: rgb(120, 177, 89);
+    cursor: pointer;
+}
+
+.reject-button {
+    color: rgb(212, 45, 45);
+    cursor: pointer;
+}
